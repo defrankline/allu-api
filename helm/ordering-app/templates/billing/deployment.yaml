@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: billing
-          image: mguay/ordering-app_billing
+          image: kachinga/allu-billing
           env:
             - name: RABBIT_MQ_BILLING_QUEUE
               value: billing

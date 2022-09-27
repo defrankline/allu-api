@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: mguay/ordering-app_orders
+          image: kachinga/allu-order
           ports:
             - containerPort: 3000
           env:

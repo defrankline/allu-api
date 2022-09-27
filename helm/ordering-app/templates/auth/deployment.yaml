@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: mguay/ordering-app_auth
+          image: kachinga/allu-auth
           ports:
             - containerPort: 3001
           env:
