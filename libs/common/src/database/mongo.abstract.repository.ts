@@ -6,10 +6,13 @@ import {
   UpdateQuery,
   SaveOptions,
   Connection,
+  ClientSession,
 } from 'mongoose';
 import { AbstractDocument } from './mongo.abstract.schema';
 
-export abstract class MongoAbstractRepository<TDocument extends AbstractDocument> {
+export abstract class MongoAbstractRepository<
+  TDocument extends AbstractDocument,
+> {
   protected abstract readonly logger: Logger;
 
   constructor(
@@ -73,9 +76,9 @@ export abstract class MongoAbstractRepository<TDocument extends AbstractDocument
     return this.model.find(filterQuery, {}, { lean: true });
   }
 
-  async startTransaction() {
+  async startTransaction(): Promise<ClientSession> {
     const session = await this.connection.startSession();
-    session.startTransaction();
+    await session.startTransaction();
     return session;
   }
 }
