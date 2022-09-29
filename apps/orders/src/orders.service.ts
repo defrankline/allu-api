@@ -18,7 +18,7 @@ export class OrdersService {
       const order = await this.ordersRepository.create(request, { session });
       await lastValueFrom(
         this.billingClient.emit('order_created', {
-          request,
+          order,
           Authentication: authentication,
         }),
       );

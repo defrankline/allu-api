@@ -55,9 +55,20 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
   rabbitmq:
-    image: rabbitmq
+    container_name: rabbitmq
+    image: 'rabbitmq:3.8.1-management'
+    hostname: rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBIT_DEFAULT_USER: "guest"
+      RABBIT_DEFAULT_PASS: "guest"
+      RABBIT_DEFAULT_VHOST: "/"
     ports:
       - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./rabbitmq-data:/var/lib/data
+      - ./rabbitmq-data/logs:/var/log/data
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
     environment:
