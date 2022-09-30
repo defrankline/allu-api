@@ -1,28 +1,42 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
 import { CreateUserRequest } from './dto/create-user.request';
 import { UsersService } from './users.service';
+import { UpdateUserRequest } from './dto/update-user.request';
 
 @Controller('auth/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  async getAll() {
+    return this.usersService.getUsers({});
+  }
+
   @Post()
-  async createUser(@Body() request: CreateUserRequest) {
+  async create(@Body() request: CreateUserRequest) {
     return this.usersService.createUser(request);
   }
 
   @Put(':id')
-  updateUser(
-    @Param('id', ParseIntPipe) id: string,
-    @Body() request: CreateUserRequest,
-  ) {
+  update(@Param('id') id: string, @Body() request: UpdateUserRequest) {
+    return this.usersService.updateUser(id, request);
+  }
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.usersService.findById(id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string, @Body() request: UpdateUserRequest) {
     return this.usersService.updateUser(id, request);
   }
 }

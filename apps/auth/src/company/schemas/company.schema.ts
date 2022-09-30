@@ -5,6 +5,9 @@ import { AbstractDocument } from '@app/common';
 export class Company extends AbstractDocument {
   @Prop()
   name: string;
+
+  @Prop()
+  number: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
