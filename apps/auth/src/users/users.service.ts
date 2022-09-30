@@ -1,5 +1,6 @@
 import {
   Injectable,
+  NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -14,11 +15,28 @@ export class UsersService {
 
   async createUser(request: CreateUserRequest) {
     await this.validateCreateUserRequest(request);
-    const user = await this.usersRepository.create({
+    return await this.usersRepository.create({
       ...request,
       password: await bcrypt.hash(request.password, 10),
     });
-    return user;
+  }
+
+  async updateUser(
+    id: string,
+    updateStudentDto: CreateUserRequest,
+  ): Promise<User> {
+    const existingStudent = await this.usersRepository.findOneAndUpdate(
+      { id: id },
+      updateStudentDto,
+    );
+    if (!existingStudent) {
+      throw new NotFoundException(`User #${id} not found`);
+    }
+    return existingStudent;
+  }
+
+  async findById(id: number) {
+    return await this.usersRepository.findOne({ id: id });
   }
 
   private async validateCreateUserRequest(request: CreateUserRequest) {
