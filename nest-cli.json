@@ -61,6 +61,87 @@
       "compilerOptions": {
         "tsConfigPath": "apps/inventory/tsconfig.app.json"
       }
+    },
+    "share-service": {
+      "type": "application",
+      "root": "apps/share-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/share-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/share-service/tsconfig.app.json"
+      }
+    },
+    "saving-service": {
+      "type": "application",
+      "root": "apps/saving-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/saving-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/saving-service/tsconfig.app.json"
+      }
+    },
+    "loan-service": {
+      "type": "application",
+      "root": "apps/loan-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/loan-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/loan-service/tsconfig.app.json"
+      }
+    },
+    "contribution-service": {
+      "type": "application",
+      "root": "apps/contribution-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/contribution-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/contribution-service/tsconfig.app.json"
+      }
+    },
+    "budget-service": {
+      "type": "application",
+      "root": "apps/budget-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/budget-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/budget-service/tsconfig.app.json"
+      }
+    },
+    "income-service": {
+      "type": "application",
+      "root": "apps/income-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/income-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/income-service/tsconfig.app.json"
+      }
+    },
+    "expenditure-service": {
+      "type": "application",
+      "root": "apps/expenditure-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/expenditure-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expenditure-service/tsconfig.app.json"
+      }
+    },
+    "accounting-service": {
+      "type": "application",
+      "root": "apps/accounting-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/accounting-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/accounting-service/tsconfig.app.json"
+      }
+    },
+    "asset-service": {
+      "type": "application",
+      "root": "apps/asset-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/asset-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/asset-service/tsconfig.app.json"
+      }
     }
   }
 }
