@@ -3,6 +3,6 @@ import { AssetServiceModule } from './asset-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AssetServiceModule);
-  await app.listen(3000);
+  await app.listen(3005);
 }
 bootstrap();

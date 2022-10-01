@@ -3,6 +3,6 @@ import { ExpenditureServiceModule } from './expenditure-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(ExpenditureServiceModule);
-  await app.listen(3000);
+  await app.listen(3008);
 }
 bootstrap();

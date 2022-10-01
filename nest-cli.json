@@ -142,6 +142,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/asset-service/tsconfig.app.json"
       }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "deposit-service": {
+      "type": "application",
+      "root": "apps/deposit-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/deposit-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/deposit-service/tsconfig.app.json"
+      }
     }
   }
 }
