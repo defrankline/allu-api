@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build api-gateway
+RUN npm run build accounting-service
 
 FROM node:alpine as production
 
@@ -25,4 +25,4 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/apps/api-gateway/main"]
+CMD ["node", "dist/apps/accounting-service/main"]

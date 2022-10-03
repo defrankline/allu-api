@@ -9,8 +9,6 @@ import { UsersRepository } from './users.repository';
 import { CreateUserRequest } from './dto/create-user.request';
 import { User } from './schemas/user.schema';
 import { UpdateUserRequest } from './dto/update-user.request';
-import { CompanyRequest } from '../company/dto/company.request';
-import { Company } from '../company/schemas/company.schema';
 
 @Injectable()
 export class UsersService {

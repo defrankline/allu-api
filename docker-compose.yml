@@ -91,6 +91,24 @@ services:
     ports:
       - '3003:3003'
 
+  accounting:
+    build:
+      context: .
+      dockerfile: ./apps/accounting-service/Dockerfile
+      target: development
+    command: npm run start:dev accounting-service
+    env_file:
+      - ./apps/accounting-service/.env
+    depends_on:
+      - accounting-db
+      - auth
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3004:3004'
+
   rabbitmq:
     container_name: rabbitmq
     image: 'rabbitmq:3.8.1-management'
@@ -166,10 +184,28 @@ services:
     volumes:
       - inventory-db-data:/var/lib/postgresql/data
 
+  accounting-db:
+    image: postgres:11
+    container_name: accounting-db
+    expose:
+      - "5434"
+    ports:
+      - "5434:5434"
+    command: -p 5434
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: accounting
+    volumes:
+      - accounting-db-data:/var/lib/postgresql/data
+
 volumes:
   mongodb_master_data:
     driver: local
   stock-db-data:
     driver: local
   inventory-db-data:
+    driver: local
+  accounting-db-data:
     driver: local
