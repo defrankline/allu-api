@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Param,
   ParseIntPipe,
   Post,
@@ -22,6 +23,8 @@ import { User } from '../../../auth/src/user/user';
 
 @Controller('api/v1/accounting/accounts')
 export class AccountController {
+  private readonly logger = new Logger(AccountController.name);
+
   constructor(private readonly accountService: AccountService) {}
 
   @Post()
@@ -30,6 +33,11 @@ export class AccountController {
     @Body() createAccountDto: CreateAccountDto,
     @CurrentUser() user: User,
   ) {
+    const companySet = !!createAccountDto.company;
+    if (!companySet) {
+      createAccountDto.company = user.company.id;
+    }
+    this.logger.log(user.company.name + ': Create Account ', createAccountDto);
     return this.accountService.create(createAccountDto);
   }
 
@@ -64,7 +72,12 @@ export class AccountController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAccountDto: UpdateAccountDto,
+    @CurrentUser() user: User,
   ): Promise<UpdateResult> {
+    const companySet = !!updateAccountDto.company;
+    if (!companySet) {
+      updateAccountDto.company = user.company.id;
+    }
     return this.accountService.update(id, updateAccountDto);
   }
 }

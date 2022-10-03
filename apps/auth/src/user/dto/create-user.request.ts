@@ -22,7 +22,6 @@ export class CreateUserRequest {
   @IsNotEmpty()
   mobile: string;
 
-  @IsNotEmpty()
   company: Company;
 
   @IsNotEmpty()

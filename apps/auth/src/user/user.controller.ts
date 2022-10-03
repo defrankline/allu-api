@@ -11,6 +11,8 @@ import {
 import { CreateUserRequest } from './dto/create-user.request';
 import { UserService } from './user.service';
 import { UpdateUserRequest } from './dto/update-user.request';
+import { CurrentUser } from '../current-user.decorator';
+import { User } from './user';
 
 @Controller('auth/user')
 export class UserController {
@@ -22,7 +24,11 @@ export class UserController {
   }
 
   @Post()
-  async create(@Body() request: CreateUserRequest) {
+  async create(@Body() request: CreateUserRequest, @CurrentUser() user: User) {
+    const companySet = !!request.company;
+    if (!companySet) {
+      request.company = user.company;
+    }
     return this.userService.create(request);
   }
 
@@ -30,7 +36,12 @@ export class UserController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() request: UpdateUserRequest,
+    @CurrentUser() user: User,
   ) {
+    const companySet = !!request.company;
+    if (!companySet) {
+      request.company = user.company;
+    }
     return this.userService.update(id, request);
   }
 

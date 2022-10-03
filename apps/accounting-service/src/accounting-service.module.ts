@@ -7,7 +7,12 @@ import { AccountingServiceService } from './accounting-service.service';
 import { AccountTypeController } from './controllers/account-type.controller';
 import { AccountTypeService } from './services/account-type.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountType } from './entities';
+import accountingEntities, {
+  AccountType,
+  Batch,
+  Transaction,
+  TransactionItem,
+} from './entities';
 import { AccountSubType } from './entities/account-sub-type';
 import { AccountGroup } from './entities/account-group';
 import { Account } from './entities/account';
@@ -36,7 +41,7 @@ import { AccountController } from './controllers/account.controller';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [AccountType, AccountSubType, AccountGroup, Account],
+        entities: accountingEntities,
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -48,6 +53,8 @@ import { AccountController } from './controllers/account.controller';
       AccountSubType,
       AccountGroup,
       Account,
+      Transaction,
+      TransactionItem,
     ]),
   ],
   controllers: [

@@ -27,7 +27,6 @@ export class UpdateUserRequest {
   @IsNotEmpty()
   mobile: string;
 
-  @IsNotEmpty()
   company: Company;
 
   @IsNotEmpty()

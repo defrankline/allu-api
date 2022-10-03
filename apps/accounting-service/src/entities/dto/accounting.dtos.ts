@@ -89,7 +89,6 @@ export class CreateAccountDto {
   @IsNotEmpty()
   number: string;
 
-  @IsNotEmpty()
   @IsNumber()
   company: number;
 
@@ -107,7 +106,6 @@ export class UpdateAccountDto {
   @IsNotEmpty()
   number: string;
 
-  @IsNotEmpty()
   @IsNumber()
   company: number;
 
