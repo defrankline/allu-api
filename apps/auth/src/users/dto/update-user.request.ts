@@ -1,10 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { Company } from '../../company/schemas/company.schema';
+import { IsEmail } from 'class-validator';
 
 export class UpdateUserRequest {
   @IsEmail()
   email: string;
-
-  @IsNotEmpty()
-  company: Company;
 }

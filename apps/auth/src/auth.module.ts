@@ -8,7 +8,6 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { UsersModule } from './users/users.module';
-import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -33,7 +32,6 @@ import { CompanyModule } from './company/company.module';
       }),
       inject: [ConfigService],
     }),
-    CompanyModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
