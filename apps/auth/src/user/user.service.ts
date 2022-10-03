@@ -9,7 +9,7 @@ import { CreateUserRequest } from './dto/create-user.request';
 import { UpdateUserRequest } from './dto/update-user.request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './schemas/user';
+import { User } from './user';
 
 @Injectable()
 export class UserService {

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Company } from '../company/company';
 
 @Entity()
 export class User {
@@ -25,8 +32,20 @@ export class User {
 
   @Column({
     nullable: false,
+    unique: true,
+    default: '',
+    name: 'number',
+  })
+  number: string;
+
+  @Column({
+    nullable: false,
     default: '',
     name: 'password',
   })
   password: string;
+
+  @ManyToOne(() => Company, { eager: true })
+  @JoinColumn()
+  company: Company;
 }

@@ -7,13 +7,16 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UserModule } from './users/user.module';
+import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/schemas/user';
+import { User } from './user/user';
+import { CompanyModule } from './company/company.module';
+import { Company } from './company/company';
 
 @Module({
   imports: [
     UserModule,
+    CompanyModule,
     RmqModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -32,7 +35,7 @@ import { User } from './users/schemas/user';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User],
+        entities: [User, Company],
         synchronize: true,
       }),
       inject: [ConfigService],

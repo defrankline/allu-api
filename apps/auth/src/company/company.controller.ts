@@ -8,28 +8,27 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateUserRequest } from './dto/create-user.request';
-import { UserService } from './user.service';
-import { UpdateUserRequest } from './dto/update-user.request';
+import { CompanyService } from './company.service';
+import { CreateCompanyRequest, UpdateCompanyRequest } from './dto';
 
-@Controller('auth/users')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@Controller('auth/company')
+export class CompanyController {
+  constructor(private readonly userService: CompanyService) {}
 
   @Get()
   async getAll() {
-    return this.userService.getUsers({});
+    return this.userService.getCompanies({});
   }
 
   @Post()
-  async create(@Body() request: CreateUserRequest) {
+  async create(@Body() request: CreateCompanyRequest) {
     return this.userService.create(request);
   }
 
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() request: UpdateUserRequest,
+    @Body() request: UpdateCompanyRequest,
   ) {
     return this.userService.update(id, request);
   }

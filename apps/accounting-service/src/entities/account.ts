@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AccountGroup } from './account-group';
-import { AccountSubType } from './account-sub-type';
+import { Company } from '../../../auth/src/company/company';
 
 @Entity()
 export class Account {
@@ -31,7 +31,7 @@ export class Account {
   })
   number: string;
 
-  @ManyToOne(() => AccountSubType, { eager: true })
+  @ManyToOne(() => AccountGroup, { eager: true })
   @JoinColumn()
   accountGroup: AccountGroup;
 }

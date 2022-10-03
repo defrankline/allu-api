@@ -1,11 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { BalanceNature } from './balance-nature';
 
 @Entity()
-export class AccountType {
+export class Company {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    name: 'account_type_id',
+    name: 'company_id',
   })
   id: number;
 
@@ -20,15 +19,7 @@ export class AccountType {
     nullable: false,
     unique: true,
     default: '',
-    name: 'code',
+    name: 'number',
   })
-  code: string;
-
-  @Column({
-    type: 'enum',
-    name: 'balance_nature',
-    enum: BalanceNature,
-    default: BalanceNature.DEBIT,
-  })
-  balanceNature: BalanceNature;
+  number: string;
 }
