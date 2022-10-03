@@ -15,6 +15,8 @@ import { AccountSubTypeController } from './controllers/account-sub-type.control
 import { AccountSubTypeService } from './services/account-sub-type.service';
 import { AccountGroupService } from './services/account-group.service';
 import { AccountGroupController } from './controllers/account-group.controller';
+import { AccountService } from './services/account.service';
+import { AccountController } from './controllers/account.controller';
 
 @Module({
   imports: [
@@ -53,12 +55,14 @@ import { AccountGroupController } from './controllers/account-group.controller';
     AccountTypeController,
     AccountSubTypeController,
     AccountGroupController,
+    AccountController,
   ],
   providers: [
     AccountingServiceService,
     AccountTypeService,
     AccountSubTypeService,
     AccountGroupService,
+    AccountService,
   ],
 })
 export class AccountingServiceModule {}
