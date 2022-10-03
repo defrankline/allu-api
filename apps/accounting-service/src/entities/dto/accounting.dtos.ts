@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 import { BalanceNature } from '../balance-nature';
 import { AccountType } from '../account-type';
 import { AccountSubType } from '../account-sub-type';
@@ -87,10 +87,14 @@ export class CreateAccountDto {
   name: string;
 
   @IsNotEmpty()
-  code: string;
+  number: string;
 
   @IsNotEmpty()
-  balanceNature: BalanceNature;
+  @IsNumber()
+  company: number;
+
+  @IsNotEmpty()
+  accountGroup: AccountGroup;
 }
 
 export class UpdateAccountDto {
@@ -102,6 +106,10 @@ export class UpdateAccountDto {
 
   @IsNotEmpty()
   number: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  company: number;
 
   @IsNotEmpty()
   accountGroup: AccountGroup;

@@ -1,14 +1,15 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AccountGroup } from './account-group';
-import { Company } from '../../../auth/src/company/company';
 
 @Entity()
+@Index(['number', 'company'], { unique: true })
 export class Account {
   @PrimaryGeneratedColumn({
     type: 'bigint',
@@ -34,4 +35,12 @@ export class Account {
   @ManyToOne(() => AccountGroup, { eager: true })
   @JoinColumn()
   accountGroup: AccountGroup;
+
+  @Column({
+    nullable: false,
+    default: 0,
+    type: 'bigint',
+    name: 'company',
+  })
+  company: number;
 }
