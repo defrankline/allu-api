@@ -23,13 +23,15 @@ export class UserService {
       ...request,
       password: await bcrypt.hash(request.password, 10),
     };
-    await this.validateCreateUserRequest(payload);
+    await this.validateCreateUserEmailRequest(payload);
+    await this.validateCreateUserNumberRequest(payload);
     const newItem = this.userRepository.create(payload);
     return this.userRepository.save(newItem);
   }
 
   async update(id: number, updateUserDto: UpdateUserRequest) {
-    await this.validateUpdateUserRequest(updateUserDto);
+    await this.validateUpdateUserEmailRequest(updateUserDto);
+    await this.validateUpdateUserNumberRequest(updateUserDto);
     const existingUser = await this.userRepository.update(
       { id: id },
       updateUserDto,
@@ -44,7 +46,7 @@ export class UserService {
     return await this.userRepository.findOneBy({ id: id });
   }
 
-  private async validateCreateUserRequest(request: CreateUserRequest) {
+  private async validateCreateUserEmailRequest(request: CreateUserRequest) {
     let row: User;
     try {
       row = await this.userRepository.findOneBy({
@@ -57,7 +59,7 @@ export class UserService {
     }
   }
 
-  private async validateUpdateUserRequest(request: UpdateUserRequest) {
+  private async validateUpdateUserEmailRequest(request: UpdateUserRequest) {
     let count = 1;
     try {
       count = await this.userRepository.countBy({
@@ -66,6 +68,33 @@ export class UserService {
     } catch (err) {}
     if (count > 1) {
       throw new UnprocessableEntityException('Email already exists.');
+    }
+  }
+
+  private async validateCreateUserNumberRequest(request: CreateUserRequest) {
+    let row: User;
+    try {
+      row = await this.userRepository.findOneBy({
+        number: request.number,
+        company: request.company,
+      });
+    } catch (err) {}
+
+    if (row) {
+      throw new UnprocessableEntityException('Number already exists.');
+    }
+  }
+
+  private async validateUpdateUserNumberRequest(request: UpdateUserRequest) {
+    let count = 1;
+    try {
+      count = await this.userRepository.countBy({
+        number: request.number,
+        company: request.company,
+      });
+    } catch (err) {}
+    if (count > 1) {
+      throw new UnprocessableEntityException('Number already exists.');
     }
   }
 

@@ -1,13 +1,16 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Company } from '../company/company';
+import { Role } from '../role/role';
 
 @Entity()
+@Index(['number', 'company'], { unique: true })
 export class User {
   @PrimaryGeneratedColumn({
     type: 'bigint',
@@ -34,6 +37,13 @@ export class User {
     nullable: false,
     unique: true,
     default: '',
+    name: 'mobile',
+  })
+  mobile: string;
+
+  @Column({
+    nullable: false,
+    default: '',
     name: 'number',
   })
   number: string;
@@ -48,4 +58,8 @@ export class User {
   @ManyToOne(() => Company, { eager: true })
   @JoinColumn()
   company: Company;
+
+  @ManyToOne(() => Role, { eager: true })
+  @JoinColumn()
+  role: Role;
 }

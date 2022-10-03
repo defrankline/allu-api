@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { CompanyCategory } from './company-category';
 
 @Entity()
 export class Company {
@@ -22,4 +29,8 @@ export class Company {
     name: 'number',
   })
   number: string;
+
+  @ManyToOne(() => CompanyCategory, { eager: true })
+  @JoinColumn()
+  category: CompanyCategory;
 }

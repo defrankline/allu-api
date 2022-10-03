@@ -1,4 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty, IsString } from 'class-validator';
+import { Company } from '../../company/company';
+import { Role } from '../../role/role';
 
 export class CreateUserRequest {
   @IsEmail()
@@ -15,4 +17,14 @@ export class CreateUserRequest {
   @IsString()
   @IsNotEmpty()
   number: string;
+
+  @IsMobilePhone()
+  @IsNotEmpty()
+  mobile: string;
+
+  @IsNotEmpty()
+  company: Company;
+
+  @IsNotEmpty()
+  role: Role;
 }

@@ -12,11 +12,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user';
 import { CompanyModule } from './company/company.module';
 import { Company } from './company/company';
+import { RoleModule } from './role/role.module';
+import { Role } from './role/role';
+import { CompanyCategory } from './company/company-category';
 
 @Module({
   imports: [
     UserModule,
     CompanyModule,
+    RoleModule,
     RmqModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -35,7 +39,7 @@ import { Company } from './company/company';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, Company],
+        entities: [User, Company, Role, CompanyCategory],
         synchronize: true,
       }),
       inject: [ConfigService],
