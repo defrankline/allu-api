@@ -15,8 +15,8 @@ import { UpdateResult } from 'typeorm';
 import { CurrentUser } from '../../../auth/src/current-user.decorator';
 import { User } from '../../../auth/src/user/user';
 import { ShareService } from './share.service';
-import { ShareRequest } from '../dto';
 import { Share } from './share';
+import { CreateShareRequest, UpdateShareRequest } from '../dto';
 
 @Controller('api/v1/share-service/shares')
 export class ShareController {
@@ -27,7 +27,7 @@ export class ShareController {
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(
-    @Body() createShareDto: ShareRequest,
+    @Body() createShareDto: CreateShareRequest,
     @CurrentUser() user: User,
   ) {
     const companySet = !!createShareDto.company;
@@ -70,7 +70,7 @@ export class ShareController {
   @UseGuards(JwtAuthGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateShareDto: ShareRequest,
+    @Body() updateShareDto: UpdateShareRequest,
     @CurrentUser() user: User,
   ): Promise<UpdateResult> {
     const companySet = !!updateShareDto.company;

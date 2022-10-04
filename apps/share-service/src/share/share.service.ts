@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pagination, PaginationOptionsInterface } from '@app/common';
 import { Share } from './share';
-import { ShareRequest } from '../dto';
+import { CreateShareRequest, UpdateShareRequest } from '../dto';
 
 @Injectable()
 export class ShareService {
@@ -55,12 +55,12 @@ export class ShareService {
     }
   }
 
-  async create(request: ShareRequest): Promise<Share> {
+  async create(request: CreateShareRequest): Promise<Share> {
     const newItem = this.shareRepository.create(request);
     return this.shareRepository.save(newItem);
   }
 
-  async update(id: number, request: ShareRequest) {
+  async update(id: number, request: UpdateShareRequest) {
     const existingShare = await this.shareRepository.update(
       { id: id },
       request,

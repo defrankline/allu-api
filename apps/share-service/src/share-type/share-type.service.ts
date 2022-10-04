@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { Pagination, PaginationOptionsInterface } from '@app/common';
-import { ShareTypeRequest } from '../dto';
 import { ShareType } from './share-type';
+import { CreateShareTypeRequest, UpdateShareTypeRequest } from '../dto';
 
 @Injectable()
 export class ShareTypeService {
@@ -55,12 +55,12 @@ export class ShareTypeService {
     }
   }
 
-  async create(request: ShareTypeRequest): Promise<ShareType> {
+  async create(request: CreateShareTypeRequest): Promise<ShareType> {
     const newItem = this.shareTypeRepository.create(request);
     return this.shareTypeRepository.save(newItem);
   }
 
-  async update(id: number, request: ShareTypeRequest) {
+  async update(id: number, request: UpdateShareTypeRequest) {
     const existingShareType = await this.shareTypeRepository.update(
       { id: id },
       request,
