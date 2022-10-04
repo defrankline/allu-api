@@ -79,14 +79,14 @@ export class Transaction {
   items: TransactionItem[];
 
   @Column({
+    nullable: false,
+    default: 0.0,
+    type: 'numeric',
     name: 'amount',
-    type: 'decimal',
     precision: 20,
     scale: 2,
-    default: 0.0,
-    transformer: new DecimalTransformer(),
   })
-  amount: Decimal;
+  amount: number;
 
   @Column({
     type: 'enum',

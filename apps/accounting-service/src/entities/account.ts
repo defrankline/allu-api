@@ -35,14 +35,14 @@ export class Account {
   number: string;
 
   @Column({
+    nullable: false,
+    default: 0.0,
+    type: 'numeric',
     name: 'balance',
-    type: 'decimal',
     precision: 20,
     scale: 2,
-    default: 0.0,
-    transformer: new DecimalTransformer(),
   })
-  public balance: Decimal;
+  balance: number;
 
   @ManyToOne(() => AccountGroup, { eager: true })
   @JoinColumn()

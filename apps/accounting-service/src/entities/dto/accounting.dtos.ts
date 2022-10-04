@@ -1,6 +1,5 @@
 import {
   IsBoolean,
-  isBoolean,
   IsDate,
   IsEnum,
   IsNotEmpty,
@@ -15,7 +14,6 @@ import { AccountGroup } from '../account-group';
 import { Transaction } from '../transaction';
 import { Account } from '../account';
 import Decimal from 'decimal.js';
-import { TransactionItem } from '../transaction-item';
 import { Batch } from '../batch';
 import { TransactionType } from '../transaction-type';
 
@@ -142,7 +140,7 @@ export class CreateAccountBalanceDto {
   date: Date;
 
   @IsNumber()
-  balance: Decimal;
+  balance: number;
 
   @IsNumber()
   financialYear: number;
@@ -180,7 +178,7 @@ export class UpdateAccountBalanceDto {
 export class CreateTransactionDto {
   @IsNumber()
   @IsPositive()
-  amount: Decimal;
+  amount: number;
 
   @IsNotEmpty()
   batch: Batch;
@@ -212,7 +210,7 @@ export class CreateTransactionDto {
 export class TransactionDto {
   @IsNumber()
   @IsPositive()
-  amount: Decimal;
+  amount: number;
 
   @IsNotEmpty()
   batch: Batch;
@@ -253,7 +251,7 @@ export class TransactionDto {
 export class CreateTransactionItemDto {
   @IsNumber()
   @IsPositive()
-  amount: Decimal;
+  amount: number;
 
   @IsNotEmpty()
   transaction: Transaction;

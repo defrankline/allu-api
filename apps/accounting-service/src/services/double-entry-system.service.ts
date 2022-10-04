@@ -30,10 +30,10 @@ export class DoubleEntrySystemService {
     );
     const currentBalance = account.balance;
     if (transactionItem.balanceNature == BalanceNature.DEBIT) {
-      account.balance = currentBalance.add(transactionItem.amount);
+      account.balance = currentBalance + transactionItem.amount;
       await this.accountService.update(transactionItem.account.id, account);
     } else {
-      account.balance = currentBalance.sub(transactionItem.amount);
+      account.balance = currentBalance - transactionItem.amount;
       await this.accountService.update(transactionItem.account.id, account);
     }
   }
@@ -44,10 +44,10 @@ export class DoubleEntrySystemService {
     );
     const currentBalance = account.balance;
     if (transactionItem.balanceNature == BalanceNature.CREDIT) {
-      account.balance = currentBalance.add(transactionItem.amount);
+      account.balance = currentBalance + transactionItem.amount;
       await this.accountService.update(transactionItem.account.id, account);
     } else {
-      account.balance = currentBalance.sub(transactionItem.amount);
+      account.balance = currentBalance - transactionItem.amount;
       await this.accountService.update(transactionItem.account.id, account);
     }
   }
@@ -223,7 +223,7 @@ export class DoubleEntrySystemService {
 
   public async accountBalanceIssues(
     accountId: number,
-    amount: Decimal,
+    amount: number,
     balanceNature: BalanceNature,
   ): Promise<number> {
     let errorCount = 0;
@@ -287,21 +287,21 @@ export class DoubleEntrySystemService {
     return errorCount;
   }
 
-  private totalDebitCalc(items: CreateTransactionItemDto[]): Decimal {
-    let total = new Decimal(0.0);
+  private totalDebitCalc(items: CreateTransactionItemDto[]): number {
+    let total = 0.0;
     items.map((row) => {
       if (row.balanceNature === BalanceNature.DEBIT) {
-        total = total.add(row.amount);
+        total = total + row.amount;
       }
     });
     return total;
   }
 
-  private totalCreditCalc(items: CreateTransactionItemDto[]): Decimal {
-    let total = new Decimal(0.0);
+  private totalCreditCalc(items: CreateTransactionItemDto[]): number {
+    let total = 0.0;
     items.map((row) => {
       if (row.balanceNature === BalanceNature.CREDIT) {
-        total = total.add(row.amount);
+        total = total + row.amount;
       }
     });
     return total;
@@ -315,7 +315,7 @@ export class DoubleEntrySystemService {
   ) {
     const totalDebit = this.totalDebitCalc(transactionDto.items);
     const totalCredit = this.totalCreditCalc(transactionDto.items);
-    if (totalDebit.comparedTo(0.0) > 0 && totalDebit === totalCredit) {
+    if (totalDebit > 0 && totalDebit === totalCredit) {
       const referenceNumber = transactionDto.number;
       if (transactionDto.number) {
         transactionDto.number = randomUUID().toString();
@@ -326,7 +326,7 @@ export class DoubleEntrySystemService {
 
       const createTransaction = {
         number: referenceNumber,
-        amount: new Decimal(totalDebit),
+        amount: totalDebit,
         company: company,
         date: transactionDto.date,
         batch: transactionDto.batch,
@@ -344,7 +344,7 @@ export class DoubleEntrySystemService {
         const row = {
           transaction: newTransaction,
           balanceNature: item.balanceNature,
-          amount: new Decimal(item.amount),
+          amount: item.amount,
           company: company,
           account: item.account,
         } as TransactionItem;
@@ -366,7 +366,7 @@ export class DoubleEntrySystemService {
   private async simpleDoubleEntry(
     debitAccount: Account,
     creditAccount: Account,
-    amount: Decimal,
+    amount: number,
     company: number,
     financialYear: number,
     teller: number,
