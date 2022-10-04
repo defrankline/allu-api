@@ -16,6 +16,24 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
 
+  share-service:
+    build:
+      context: .
+      dockerfile: ./apps/share-service/Dockerfile
+      target: development
+    command: npm run start:dev share-service
+    env_file:
+      - ./apps/share-service/.env
+    depends_on:
+      - share-db
+      - auth
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+
   accounting:
     build:
       context: .
@@ -66,6 +84,22 @@ services:
     volumes:
       - auth-db-data:/var/lib/postgresql/data
 
+  share-db:
+    image: postgres:11
+    container_name: auth-db
+    expose:
+      - "5436"
+    ports:
+      - "5436:5436"
+    command: -p 5436
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: share
+    volumes:
+      - share-db-data:/var/lib/postgresql/data
+
   accounting-db:
     image: postgres:11
     container_name: accounting-db
@@ -86,4 +120,6 @@ volumes:
   accounting-db-data:
     driver: local
   auth-db-data:
+    driver: local
+  share-db-data:
     driver: local
