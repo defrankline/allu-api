@@ -5,7 +5,6 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import Decimal from 'decimal.js';
 import { ShareType } from './share-type/share-type';
 
 export class ShareTypeRequest {
@@ -39,7 +38,7 @@ export class ShareRequest {
 
   @IsNumber()
   @IsNotEmpty()
-  amount: Decimal;
+  amount: number;
 
   @IsNotEmpty()
   shareType: ShareType;

@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY src .
+COPY . .
 
 RUN npm run build share-service
 
@@ -21,7 +21,7 @@ COPY package*.json ./
 
 RUN npm install --only=production
 
-COPY src .
+COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 

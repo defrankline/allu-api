@@ -18,7 +18,7 @@ import { ShareTypeRequest } from '../dto';
 import { ShareTypeService } from './share-type.service';
 import { ShareType } from './share-type';
 
-@Controller('api/v1/share-service/shares')
+@Controller('api/v1/share-service/share-types')
 export class ShareTypeController {
   private readonly logger = new Logger(ShareTypeController.name);
 

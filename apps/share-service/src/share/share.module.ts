@@ -1,18 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShareService } from './share.service';
-import { Share } from './share';
 import { ShareController } from './share.controller';
-import { RmqModule } from '@app/common';
-import { TRANSACTION_SERVICE } from '../constants/services';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Share } from './share';
+import { AuthModule } from '@app/common';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Share]),
-    RmqModule.register({
-      name: TRANSACTION_SERVICE,
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([Share]), AuthModule],
   controllers: [ShareController],
   providers: [ShareService],
   exports: [ShareService],

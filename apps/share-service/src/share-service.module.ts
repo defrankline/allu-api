@@ -4,8 +4,11 @@ import { ShareServiceService } from './share-service.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from '@app/common';
+import { AuthModule, RmqModule } from '@app/common';
 import { ShareModule } from './share/share.module';
+import { ShareTypeModule } from './share-type/share-type.module';
+import shareEntities from './share-entities';
+import { TRANSACTION_SERVICE } from './constants/services';
 
 @Module({
   imports: [
@@ -25,12 +28,18 @@ import { ShareModule } from './share/share.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
+        entities: shareEntities,
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature(shareEntities),
+    RmqModule.register({
+      name: TRANSACTION_SERVICE,
+    }),
     AuthModule,
     ShareModule,
+    ShareTypeModule,
   ],
   controllers: [ShareServiceController],
   providers: [ShareServiceService],

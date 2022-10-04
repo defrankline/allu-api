@@ -5,7 +5,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import Decimal from 'decimal.js';
 import { ShareType } from '../share-type/share-type';
 
 @Entity()
@@ -19,9 +18,12 @@ export class Share {
   @Column({
     nullable: false,
     default: 0.0,
+    type: 'numeric',
     name: 'amount',
+    precision: 20,
+    scale: 2,
   })
-  amount: Decimal;
+  amount: number;
 
   @ManyToOne(() => ShareType, { eager: true })
   @JoinColumn()

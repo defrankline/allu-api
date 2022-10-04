@@ -86,7 +86,7 @@ services:
 
   share-db:
     image: postgres:11
-    container_name: auth-db
+    container_name: share-db
     expose:
       - "5436"
     ports:
