@@ -64,7 +64,7 @@ export class AccountController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   getOne(@Param('id', ParseIntPipe) id: number) {
-    return this.accountService.findById(id);
+    return this.accountService.findOne(id);
   }
 
   @Put(':id')

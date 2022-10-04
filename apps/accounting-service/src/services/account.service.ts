@@ -3,9 +3,13 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
-import { Account } from '../entities';
+import {
+  InjectDataSource,
+  InjectEntityManager,
+  InjectRepository,
+} from '@nestjs/typeorm';
+import { DataSource, EntityManager, ILike, Repository } from 'typeorm';
+import { Account, AccountBalance } from '../entities';
 import {
   CreateAccountDto,
   UpdateAccountDto,
@@ -17,6 +21,8 @@ export class AccountService {
   constructor(
     @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
+    @InjectEntityManager() private accountManager: EntityManager,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   async paginate(
@@ -83,8 +89,8 @@ export class AccountService {
     return existingStudent;
   }
 
-  async findById(id: number) {
-    return this.accountRepository.findOneBy({ id: id });
+  async findOne(id: number) {
+    return await this.accountRepository.findOneBy({ id });
   }
 
   async delete(id: number) {

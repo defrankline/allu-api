@@ -5,23 +5,20 @@ import * as Joi from 'joi';
 import { AuthModule, RmqModule } from '@app/common';
 import { AccountingServiceService } from './accounting-service.service';
 import { AccountTypeController } from './controllers/account-type.controller';
-import { AccountTypeService } from './services/account-type.service';
+import { AccountTypeService } from './services';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import accountingEntities, {
-  AccountType,
-  Batch,
-  Transaction,
-  TransactionItem,
-} from './entities';
-import { AccountSubType } from './entities/account-sub-type';
-import { AccountGroup } from './entities/account-group';
-import { Account } from './entities/account';
 import { AccountSubTypeController } from './controllers/account-sub-type.controller';
-import { AccountSubTypeService } from './services/account-sub-type.service';
-import { AccountGroupService } from './services/account-group.service';
+import { AccountSubTypeService } from './services';
+import { AccountGroupService } from './services';
 import { AccountGroupController } from './controllers/account-group.controller';
-import { AccountService } from './services/account.service';
+import { AccountService } from './services';
 import { AccountController } from './controllers/account.controller';
+import { AccountBalanceController } from './controllers/account-balance.controller';
+import { AccountBalanceService } from './services';
+import accountingEntities from './entities';
+import { TransactionService } from './services/transaction.service';
+import { DoubleEntrySystemService } from './services/double-entry-system.service';
+import { TransactionItemService } from './services/transaction-item.service';
 
 @Module({
   imports: [
@@ -48,14 +45,7 @@ import { AccountController } from './controllers/account.controller';
     }),
     RmqModule,
     AuthModule,
-    TypeOrmModule.forFeature([
-      AccountType,
-      AccountSubType,
-      AccountGroup,
-      Account,
-      Transaction,
-      TransactionItem,
-    ]),
+    TypeOrmModule.forFeature(accountingEntities),
   ],
   controllers: [
     AccountingServiceController,
@@ -63,6 +53,7 @@ import { AccountController } from './controllers/account.controller';
     AccountSubTypeController,
     AccountGroupController,
     AccountController,
+    AccountBalanceController,
   ],
   providers: [
     AccountingServiceService,
@@ -70,6 +61,10 @@ import { AccountController } from './controllers/account.controller';
     AccountSubTypeService,
     AccountGroupService,
     AccountService,
+    AccountBalanceService,
+    TransactionService,
+    DoubleEntrySystemService,
+    TransactionItemService,
   ],
 })
 export class AccountingServiceModule {}

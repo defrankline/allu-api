@@ -5,6 +5,7 @@ import { Account } from './account';
 import { Transaction } from './transaction';
 import { TransactionItem } from './transaction-item';
 import { Batch } from './batch';
+import { AccountBalance } from './account-balance';
 
 const accountingEntities = [
   AccountType,
@@ -14,6 +15,7 @@ const accountingEntities = [
   Transaction,
   TransactionItem,
   Batch,
+  AccountBalance,
 ];
 
 export { AccountType };
@@ -23,4 +25,5 @@ export { Account };
 export { Transaction };
 export { TransactionItem };
 export { Batch };
+export { AccountBalance };
 export default accountingEntities;

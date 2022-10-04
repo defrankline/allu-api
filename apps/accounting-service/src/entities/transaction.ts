@@ -12,6 +12,8 @@ import { Batch } from './batch';
 import { TransactionItem } from './transaction-item';
 import { DecimalTransformer } from '@app/common/decimal-transformer';
 import Decimal from 'decimal.js';
+import { BalanceNature } from './balance-nature';
+import { TransactionType } from './transaction-type';
 
 @Entity()
 export class Transaction {
@@ -28,6 +30,27 @@ export class Transaction {
     name: 'number',
   })
   number: string;
+
+  @Column({
+    nullable: true,
+    default: '',
+    name: 'cheque_number',
+  })
+  chequeNumber: string;
+
+  @Column({
+    nullable: true,
+    name: 'payee',
+    default: '',
+  })
+  payee: string;
+
+  @Column({
+    nullable: false,
+    name: 'narration',
+    default: '',
+  })
+  narration: string;
 
   @Column({
     type: 'timestamptz',
@@ -63,5 +86,13 @@ export class Transaction {
     default: 0.0,
     transformer: new DecimalTransformer(),
   })
-  public amount: Decimal;
+  amount: Decimal;
+
+  @Column({
+    type: 'enum',
+    name: 'transaction_type',
+    enum: BalanceNature,
+    default: TransactionType.RECEIPT,
+  })
+  transactionType: TransactionType;
 }

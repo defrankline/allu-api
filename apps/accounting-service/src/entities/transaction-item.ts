@@ -27,7 +27,7 @@ export class TransactionItem {
     default: 0.0,
     transformer: new DecimalTransformer(),
   })
-  public amount: Decimal;
+  amount: Decimal;
 
   @ManyToOne(() => Transaction, (transaction) => transaction.items, {
     eager: true,
