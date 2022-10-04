@@ -7,6 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AccountGroup } from './account-group';
+import { DecimalTransformer } from '@app/common/decimal-transformer';
+import Decimal from 'decimal.js';
 
 @Entity()
 @Index(['number', 'company'], { unique: true })
@@ -31,6 +33,16 @@ export class Account {
     name: 'number',
   })
   number: string;
+
+  @Column({
+    name: 'balance',
+    type: 'decimal',
+    precision: 20,
+    scale: 2,
+    default: 0.0,
+    transformer: new DecimalTransformer(),
+  })
+  public balance: Decimal;
 
   @ManyToOne(() => AccountGroup, { eager: true })
   @JoinColumn()

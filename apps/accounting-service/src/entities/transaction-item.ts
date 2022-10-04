@@ -8,6 +8,8 @@ import {
 import { Transaction } from './transaction';
 import { Account } from './account';
 import { BalanceNature } from './balance-nature';
+import Decimal from 'decimal.js';
+import { DecimalTransformer } from '@app/common/decimal-transformer';
 
 @Entity()
 export class TransactionItem {
@@ -18,15 +20,18 @@ export class TransactionItem {
   id: number;
 
   @Column({
-    nullable: false,
-    default: 0,
-    type: 'bigint',
     name: 'amount',
+    type: 'decimal',
+    precision: 20,
+    scale: 2,
+    default: 0.0,
+    transformer: new DecimalTransformer(),
   })
-  amount: number;
+  public amount: Decimal;
 
-  @ManyToOne(() => Transaction, { eager: true })
-  @JoinColumn()
+  @ManyToOne(() => Transaction, (transaction) => transaction.items, {
+    eager: true,
+  })
   transaction: Transaction;
 
   @ManyToOne(() => Account, { eager: true })
